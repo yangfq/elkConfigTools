@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Class-Path: ./lib/tomcat-embed-el-8.5.11.jar ./lib/unbescape-1.1.0.REL
+ EASE.jar ./lib/classmate-1.3.3.jar ./lib/jquery-1.11.1.jar ./lib/log4
+ j-over-slf4j-1.7.24.jar ./lib/jcl-over-slf4j-1.7.24.jar ./lib/tomcat-
+ embed-core-8.5.11.jar ./lib/hibernate-validator-5.3.4.Final.jar ./lib
+ /spring-boot-1.5.2.RELEASE.jar ./lib/jul-to-slf4j-1.7.24.jar ./lib/sn
+ akeyaml-1.17.jar ./lib/spring-core-4.3.7.RELEASE.jar ./lib/bootstrap-
+ 3.3.7.jar ./lib/logback-classic-1.1.11.jar ./lib/spring-boot-starter-
+ logging-1.5.2.RELEASE.jar ./lib/thymeleaf-spring4-2.1.5.RELEASE.jar .
+ /lib/spring-boot-starter-thymeleaf-1.5.2.RELEASE.jar ./lib/jackson-da
+ tabind-2.8.7.jar ./lib/logback-core-1.1.11.jar ./lib/thymeleaf-layout
+ -dialect-1.4.0.jar ./lib/thymeleaf-2.1.5.RELEASE.jar ./lib/spring-boo
+ t-starter-web-1.5.2.RELEASE.jar ./lib/jackson-annotations-2.8.0.jar .
+ /lib/spring-boot-starter-1.5.2.RELEASE.jar ./lib/xml-apis-1.4.01.jar 
+ ./lib/spring-context-4.3.7.RELEASE.jar ./lib/fastjson-1.2.33.jar ./li
+ b/spring-webmvc-4.3.7.RELEASE.jar ./lib/xercesImpl-2.11.0.jar ./lib/g
+ roovy-2.4.9.jar ./lib/slf4j-api-1.7.24.jar ./lib/spring-boot-autoconf
+ igure-1.5.2.RELEASE.jar ./lib/spring-expression-4.3.7.RELEASE.jar ./l
+ ib/tomcat-embed-websocket-8.5.11.jar ./lib/javassist-3.21.0-GA.jar ./
+ lib/jackson-core-2.8.7.jar ./lib/spring-boot-starter-tomcat-1.5.2.REL
+ EASE.jar ./lib/spring-web-4.3.7.RELEASE.jar ./lib/spring-beans-4.3.7.
+ RELEASE.jar ./lib/j2ssh-core-0.2.9.jar ./lib/jboss-logging-3.3.0.Fina
+ l.jar ./lib/ognl-3.0.8.jar ./lib/spring-aop-4.3.7.RELEASE.jar ./lib/v
+ alidation-api-1.1.0.Final.jar ./lib/nekohtml-1.9.22.jar
+Main-Class: com.elk.ElkToolsApplication
+

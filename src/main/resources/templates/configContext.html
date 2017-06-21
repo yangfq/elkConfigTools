@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>配置文件打开</title>
+    <link href="/jquery-easyui-1.5.2/themes/icon.css" rel="stylesheet" type="text/css"/>
+    <link href="/jquery-easyui-1.5.2/themes/default/easyui.css" rel="stylesheet"
+          type="text/css"/>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+    <script type="text/javascript"
+            src="/jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<div id="condArea" class="easyui-panel" title="条件区" style="height:130px;padding:5px;background:#fafafa;">
+    <form id="conf_form" method="post">
+        <input name="KEY" type="hidden" value="LIUJZ+YANGFQ-SAP-ESSSETTLE-CLIENT">
+        <table style="width:80%;">
+            <caption style="text-align:left;"><strong>远程主机信息</strong></caption>
+            <tr style="text-align:left;">
+                <th style="font-weight: normal;" width="8%">主机IP:</th>
+                <th width="25%">
+                    <input id="hostIp" type="text" value="10.1.131.10"
+                           onfocus="if(value=='10.1.131.10'){value=''}"
+                           onblur="if(value==''){value='10.1.131.10'}"/></th>
+                <th style="font-weight: normal;" width="8%">主机端口:</th>
+                <th style="float:left;" width="8%">
+                    <input id="hostPort" type="text" value="22"
+                           onfocus="if(value=='22'){value=''}"
+                           onblur="if(value==''){value='22'}"/></th>
+            </tr>
+            <tr style="text-align:left;">
+                <th style="font-weight: normal;">用户名:</th>
+                <th><input id="userName" type="text" value="root"
+                           onfocus="if(value=='root'){value=''}"
+                           onblur="if(value==''){value='root'}"/></th>
+                <th style="font-weight: normal;">密码:</th>
+                <th><input id="userPass" type="text" value="bata1234"
+                           onfocus="if(value=='bata1234'){value=''}"
+                           onblur="if(value==''){value='bata1234'}"/></th>
+            </tr>
+            <tr style="text-align:left;">
+                <th style="font-weight: normal;">文件路径:</th>
+                <th><input id="filePath" type="text" value="/aifs01/test/test.txt"
+                           onfocus="if(value=='/aifs01/test/test.txt'){value=''}"
+                           onblur="if(value==''){value='/aifs01/test/test.txt'}"/></th>
+                <th></th>
+                <th style="float:right;">
+                <td>
+                    <a id="openBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">打开</a>
+                    <a id="saveBtn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+                </td>
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="resultArea" class="easyui-panel" title="结果区" style="height:500px;padding:5px;background:#fafafa;">
+    <textarea id="dg" style="width:99%;height:97%;padding:5px;"></textarea>
+</div>
+</body>
+<script>
+
+    $(function () {
+
+        function writeFile()
+        {
+            var fso, ts, s ;
+            var ForReading = 1;
+
+            fso = new ActiveXObject("Scripting.FileSystemObject");
+            ts = fso.OpenTextFile("C:/Windows/Temp/conf.txt", ForReading);
+            strCon = document.getElementById("dg").val();
+            fso.writeFile();
+        }
+
+        function chkConditon() {
+            //hostIp check
+            var hostIp = $("#hostIp").val();
+            if (hostIp == "") {
+                $.messager.alert('操作提示', 'IP不能为空！', 'error');
+                return false;
+            }
+
+            //hostPort check
+            var hostPort = $("#hostPort").val();
+            if (hostPort == "") {
+                $.messager.alert('操作提示', '端口不能为空！', 'error');
+                return false;
+            }
+
+            //User name check
+            var userName = $("#userName").val();
+            if (userName == "") {
+                $.messager.alert('操作提示', '用户名不能为空！', 'error');
+                return false;
+            }
+
+            //user password check
+            var userPass = $("#userPass").val();
+            if (userPass == "") {
+                $.messager.alert('操作提示', '密码不能为空！', 'error');
+                return false;
+            }
+
+            //filePath check
+            var filePath = $("#filePath").val();
+            if (filePath == "") {
+                $.messager.alert('操作提示', '文件地址不能为空！', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+
+        $('#openBtn').click(function () {
+
+            //check input parameters
+            if (!chkConditon()) {
+                return false;
+            }
+
+            //set value to params
+            var hostIp = $("#hostIp").val();
+            var hostPort = $("#hostPort").val();
+            var userName = $("#userName").val();
+            var userPass = $("#userPass").val();
+            var filePath = $("#filePath").val();
+
+            var params = {
+                'page': 1,
+                'rows': 1,
+                'hostIp': hostIp,
+                'hostPort': hostPort,
+                'userName': userName,
+                'userPass': userPass,
+                'filePath': filePath
+            };
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: 'getConfig.htm',
+                data: params,
+                success: function (data) {
+                    //alert(data.retStr);
+                    if(data.errorMsg != "" && data.errorMsg != undefined) {
+                        $.messager.alert('系统提示', data.errorMsg, '确定');
+                    } else {
+                        //$("#dg").datagrid('loadData',{'rows':data.settles,'total':data.total});
+                        //$("#dg").val = data.confStr;
+                        //var total =data.total;
+                        //alert(data.retStr);
+                        document.getElementById("dg").innerHTML=data.retStr;
+                    }
+                    //$("#dg").datagrid("loaded"); //移除屏蔽
+                },
+                error: function (err) {
+                    $.messager.alert('操作提示', '获取信息失败!', '确定');
+                    document.getElementById("dg").innerHTML=err;
+                    //$("#dg").val = "Cannot get context from this file";
+                }
+            });
+        });
+
+
+
+        $('#saveBtn').click(function () {
+            //check input parameters
+            if (!chkConditon()) {
+                return false;
+            }
+
+            //set value to params
+            var hostIp = $("#hostIp").val();
+            var hostPort = $("#hostPort").val();
+            var userName = $("#userName").val();
+            var userPass = $("#userPass").val();
+            var filePath = $("#filePath").val();
+            var fileCon = $("#dg").val();
+
+            var params = {
+                'page': 1,
+                'rows': 1,
+                'hostIp': hostIp,
+                'hostPort': hostPort,
+                'userName': userName,
+                'userPass': userPass,
+                'filePath': filePath,
+                'fileCon': fileCon
+            };
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: 'saveConfig.htm',
+                data: params,
+                success: function (data) {
+                    //alert(data.retStr);
+                    if(data.errorMsg != "" && data.errorMsg != undefined) {
+                        $.messager.alert('系统提示', data.errorMsg, '确定');
+                    } else {
+                        alert(data.retStr);
+                        document.getElementById("dg").innerHTML="";
+                    }
+                    //$("#dg").datagrid("loaded"); //移除屏蔽
+                },
+                error: function (err) {
+                    $.messager.alert('操作提示', '获取信息失败!', '确定');
+                    document.getElementById("dg").innerHTML="";
+                    //$("#dg").val = "Cannot get context from this file";
+                }
+            });
+         });
+
+    });
+</script>
+</html>
